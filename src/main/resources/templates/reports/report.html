@@ -1,0 +1,34 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{layout/layout ::parent(~{::title},~{::#content},~{::link},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- you can add single or multiple link tag -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <title>Project</title>
+  </head>
+  <body>
+    <!-- Page content inside this -->
+    <div id="content">
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Reports</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+          </ol>
+        </nav>
+      </div>
+
+      
+
+    </div>
+
+    <!-- you can add single or multiple scripts tag-->
+    <script>
+      console.log("home page");
+    </script>
+  </body>
+</html>

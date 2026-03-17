@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sidebar</title>
+  </head>
+  <body>
+    <th:block th:fragment="sidebar">
+      <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+        <div class="sidebar-brand d-none d-md-flex">
+          <span class="sidebar-brand-full">Task Vision</span>
+        </div>
+
+        <ul class="sidebar-nav" data-coreui="navigation">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/dashboard}">
+              <i class="nav-icon cil-speedometer"></i>
+              Dashboard
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/task}">
+              <i class="nav-icon cil-user"></i>
+              Tasks
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/project}">
+              <i class="nav-icon cil-user"></i>
+              Projects
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/report}">
+              <i class="nav-icon cil-user"></i>
+              Reports
+            </a>
+          </li>
+        </ul>
+      </div>
+    </th:block>
+  </body>
+</html>

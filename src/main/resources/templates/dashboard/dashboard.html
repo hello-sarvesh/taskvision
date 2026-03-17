@@ -1,0 +1,57 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{layout/layout ::parent(~{::title},~{::#content},~{::link},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- you can add single or multiple link tag -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <!-- Page content inside this -->
+    <div id="content">
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+            <h2>Good morning Sarvesh</h2>
+        </div>
+        <div class="col-md-6 d-flex justify-content-evenly">
+            <button class="btn btn-outline-success rounded-pill"> + Add Task </button>
+            <button class="btn btn-outline-success rounded-pill"> 01-31 Jan </button>
+            <button class="btn btn-outline-success rounded-pill"> Project </button>
+        </div>
+        
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+            <div class="rounded-4">
+                Hello 
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="rounded-4">
+                Track you team
+            </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- you can add single or multiple scripts tag-->
+    <script>
+      console.log("home page");
+    </script>
+  </body>
+</html>

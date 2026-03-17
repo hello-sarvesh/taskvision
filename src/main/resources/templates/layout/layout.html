@@ -1,0 +1,111 @@
+<!doctype html>
+<html
+  lang="en"
+  th:fragment="parent(title,content,link,script)"
+  xmlns:th="http://www.thymeleaf.org"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title data-th-replace="${title}">Page</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{/webjars/jquery-ui/1.14.1/jquery-ui.min.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{/coreui/css/style.min.css}"
+    />
+    <th:block data-th-replace="${link}"></th:block>
+  </head>
+  <body>
+    <!-- common header -->
+    <div id="alert"></div>
+
+    <!-- Sidebar -->
+    <th:block th:replace="~{layout/fragments/sidebar :: sidebar}"></th:block>
+
+    <!-- Main wrapper -->
+    <div class="wrapper d-flex flex-column min-vh-100 bg-light">
+      <!-- Header -->
+      <header class="header header-sticky mb-4">
+        <div class="container-fluid">
+          <button
+            class="header-toggler px-md-0 me-md-3"
+            type="button"
+            onclick="
+              coreui.Sidebar.getInstance(
+                document.querySelector('#sidebar'),
+              ).toggle()
+            "
+          >
+            ☰
+          </button>
+
+          <span class="fw-bold">Task Vision</span>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <div class="body flex-grow-1 px-3">
+        <!-- This is where page content goes -->
+        <section data-th-replace="${content}"></section>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div>© 2026 Sarvesh Sawant</div>
+      </footer>
+    </div>
+
+    <!-- main content -->
+    <!-- <section data-th-replace="${content}"></section> -->
+
+    <!-- common footer -->
+
+    <!-- script -->
+    <script
+      type="text/javascript"
+      th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      th:src="@{/webjars/jquery-ui/1.14.1/jquery-ui.min.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      th:src="@{/webjars/popperjs__core/2.11.8/dist/umd/popper.min.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      th:src="@{/coreui/vendors/@coreui/coreui/js/coreui.bundle.min.js}"
+    ></script>
+    <script type="text/javascript" th:src="@{/coreui/js/main.js}"></script>
+    <script>
+      function showAlert(message, type) {
+        // type -> primary,secondary,success,danger,warning,info,light,dark
+        const alertTemp = `
+                <div class="alert alert-${type}" role="alert">
+                    ${message}
+                </div>
+            `;
+        $("#alert").html(alertTemp);
+      }
+    </script>
+
+    <th:block data-th-replace="${script}"></th:block>
+  </body>
+</html>

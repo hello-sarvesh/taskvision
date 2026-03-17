@@ -1,0 +1,22 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{layout ::parent(~{::title},~{::#content},~{::link},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- you can add single or multiple link tag -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- Page content inside this -->
+    <div id="content">All contented inside</div>
+
+    <!-- you can add single or multiple scripts tag-->
+    <script>
+      console.log("home page");
+    </script>
+  </body>
+</html>
