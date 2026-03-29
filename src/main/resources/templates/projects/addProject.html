@@ -1,0 +1,84 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{layout/layout ::parent(~{::title},~{::#content},~{::link},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- you can add single or multiple link tag -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <title>Project</title>
+  </head>
+  <body>
+    <!-- Page content inside this -->
+    <div id="content">
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Projects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">New</li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <form
+            data-th-action="@{/project/save}"
+            data-th-object="${project}"
+            method="post"
+          >
+            <div class="mb-3">
+              <label for="txtName" class="form-label">Project Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="txtName"
+                data-th-field="*{name}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="txtDesc" class="form-label">Description</label>
+              <textarea
+                type="text"
+                class="form-control"
+                id="txtDesc"
+                data-th-field="*{description}"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="dateSart" class="form-label">Start Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="dateStart"
+                data-th-field="*{startDate}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="dateEnd" class="form-label">End Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="dateEnd"
+                data-th-field="*{endDate}"
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- you can add single or multiple scripts tag-->
+    <script>
+      console.log("home page");
+    </script>
+  </body>
+</html>

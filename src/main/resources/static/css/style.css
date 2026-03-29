@@ -1,0 +1,46 @@
+/* table pager */
+.table-pager-container {
+  display: flex;
+}
+
+.table-pager-container .btn-group {
+  display: flex;
+  gap: 0.2rem;
+  height: 40px;
+}
+
+.table-pager {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0.5rem 0.5rem;
+}
+
+.table-pager a {
+  font-weight: 600;
+  color: #120a8f;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+.table-pager-item + .table-pager-item:before {
+  float: left;
+  padding-right: 0.5rem;
+  color: #818181;
+  content: "/";
+}
+
+th i {
+  margin-left: 10px;
+  visibility: hidden; /* Hide icons initially */
+}
+
+th.sorted-asc i {
+  visibility: visible;
+  content: "\f0de"; /* fa-sort-asc icon */
+}
+
+th.sorted-desc i {
+  visibility: visible;
+  content: "\f0dd"; /* fa-sort-desc icon */
+}

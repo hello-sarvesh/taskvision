@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- you can add single or multiple link tag -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <title>Project</title>
   </head>
   <body>
@@ -22,8 +26,287 @@
         </nav>
       </div>
 
-      
+      <div>
+        <a
+          data-th-href="@{/project/new}"
+          class="btn btn-outline-success rounded-pill"
+          >+ Add Project</a
+        >
+      </div>
 
+      <script th:inline="javascript">
+        let projects = /*[[${projects}]]*/ {};
+        console.log(JSON.stringify(projects, null, 2));
+      </script>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h6>Project List</h6>
+            <nav aria-label="table-pager" class="table-pager-container">
+              <ol class="table-pager">
+                <li class="table-pager-item">
+                  <a
+                    th:text="${projects.number * projects.size + 1} + ' - ' + 
+            ${projects.number * projects.size + projects.numberOfElements}"
+                  ></a>
+                </li>
+                <li class="table-pager-item">
+                  <a th:text="${projects.totalElements}"></a>
+                </li>
+              </ol>
+              <nav class="btn-group">
+                <a
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  id="btnPagerPre"
+                  th:if="${!projects.first}"
+                  th:href="@{/project(pageNumber=${projects.number - 1}, pageSize=${projects.size})}"
+                >
+                  &lt;
+                </a>
+                <a
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  id="btnPagerPost"
+                  th:if="${!projects.last}"
+                  th:href="@{/project(pageNumber=${projects.number + 1}, pageSize=${projects.size})}"
+                >
+                  &gt;
+                </a>
+              </nav>
+            </nav>
+          </div>
+
+          <div class="mb-3 d-flex justify-content-between" style="gap: 10px">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="search"
+              id="txtTableSearch"
+            />
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              id="btnTableSearch"
+            >
+              Search
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="btnTableSearchClear"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div class="container">
+            <div class="table-responsive">
+              <table
+                class="table table-bordered border-primary scroll-table scroll-table-hw-1000"
+                id="tableProject"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 5%"
+                      data-th-key="id"
+                    >
+                      Sr. No.<i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 20%"
+                      data-th-key="name"
+                    >
+                      Project <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 10%"
+                      data-th-key="description"
+                    >
+                      Details <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 15%"
+                      data-th-key="startDate"
+                    >
+                      Start Date <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 15%"
+                      data-th-key="endDate"
+                    >
+                      End Date <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 10%"
+                      data-th-key="active"
+                    >
+                      Active <i class="fas fa-sort"></i>
+                    </th>
+                    <th scope="col" class="text-center" style="width: 15%">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="project,stat : ${projects.content}">
+                    <td
+                      th:text="${projects.number * projects.size + stat.index + 1 }"
+                    ></td>
+                    <td th:text="${project.name}"></td>
+                    <td th:text="${project.description}"></td>
+                    <td th:text="${project.startDate}"></td>
+                    <td th:text="${project.endDate}"></td>
+                    <td th:if="${project.active}">
+                      Active
+                      <i
+                        class="fa-regular fa-circle-check"
+                        style="color: #63e6be"
+                      ></i>
+                    </td>
+                    <td th:unless="${project.active}">
+                      Deactive
+                      <i
+                        class="fa-regular fa-circle-xmark"
+                        style="color: #e66565"
+                      ></i>
+                    </td>
+                    <td>
+                      <div class="d-flex justify-content-between">
+                        <a
+                          class="btn btn-outline-secondary"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          data-bs-title="View Record"
+                          aria-label="View Record"
+                          th:href="@{'/project/view-' + ${project.id}}"
+                        >
+                          <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a
+                          class="btn btn-outline-primary"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          data-bs-title="Update"
+                          aria-label="Update"
+                          th:href="@{'/project/update-' + ${project.id}}"
+                        >
+                          <i class="fa-solid fa-edit"></i>
+                        </a>
+                        <a
+                          class="btn btn-outline-danger"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          data-bs-title="Delete"
+                          aria-label="Delete"
+                          th:href="@{'/project/delete-' + ${project.id}}"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <nav aria-label="Page Navigation">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavFirst"
+                      th:href="@{/project(pageNumber=0, pageSize=${projects.size})}"
+                      >First</a
+                    >
+                  </li>
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavPre"
+                      th:if="${projects.hasPrevious()}"
+                      th:href="@{/project(pageNumber=${projects.number - 1}, pageSize=${projects.size})}"
+                      >Previous</a
+                    >
+                  </li>
+                  <form
+                    th:action="@{/project}"
+                    method="get"
+                    class="d-inline-flex"
+                  >
+                    <li class="page-item">
+                      <a class="page-link">
+                        <input
+                          type="number"
+                          name="pageNumber"
+                          size="4"
+                          th:max="${projects.totalPages}"
+                          th:value="${projects.number + 1}"
+                          class="form-control"
+                          style="
+                            border: 0;
+                            padding: 0px;
+                            text-align: center;
+                            background: none;
+                          "
+                          id="numTableNavPage"
+                        />
+                        <input
+                          type="hidden"
+                          name="pageSize"
+                          th:value="${projects.size}"
+                        />
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="submit"
+                        class="page-link"
+                        id="linkTableNavGo"
+                      >
+                        Go
+                      </button>
+                    </li>
+                  </form>
+
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavPost"
+                      th:if="${projects.hasNext()}"
+                      th:href="@{/project(pageNumber=${projects.number + 1}, pageSize=${projects.size})}"
+                      >Next</a
+                    >
+                  </li>
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavLast"
+                      th:href="@{/project(pageNumber=${projects.totalPages-1}, pageSize=${projects.size})}"
+                      >Last</a
+                    >
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- you can add single or multiple scripts tag-->

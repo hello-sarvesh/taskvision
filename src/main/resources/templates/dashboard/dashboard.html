@@ -8,6 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- you can add single or multiple link tag -->
     <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
     <title>Dashboard</title>
   </head>
   <body>
@@ -24,29 +28,54 @@
 
       <div class="row">
         <div class="col-md-6">
-            <h2>Good morning Sarvesh</h2>
+          <h2>Good morning Sarvesh</h2>
         </div>
         <div class="col-md-6 d-flex justify-content-evenly">
-            <button class="btn btn-outline-success rounded-pill"> + Add Task </button>
-            <button class="btn btn-outline-success rounded-pill"> 01-31 Jan </button>
-            <button class="btn btn-outline-success rounded-pill"> Project </button>
+          <button class="btn btn-outline-success rounded-pill">
+            + Add Task
+          </button>
+          <button class="btn btn-outline-success rounded-pill">
+            01-31 Jan
+          </button>
+          <button class="btn btn-outline-success rounded-pill">Project</button>
         </div>
-        
       </div>
 
       <div class="row">
         <div class="col-md-4">
-            <div class="rounded-4">
-                Hello 
+          <div class="card rounded-5" style="height: 350px">
+            <img
+              th:src="@{/images/man-profile-photo-01.jpg}"
+              alt=""
+              srcset=""
+              style="width: 100%; height: 100%"
+              class="rounded-5"
+            />
+            <div
+              class="card-img-overlay d-flex flex-column justify-content-end"
+            >
+              <div class="text-white">
+                <div class="">
+                  <h5 class="card-title">John Doe</h5>
+                </div>
+              </div>
+              <h4>Software Developer</h4>
+              <div class="">
+                <button class="btn btn-light btn-sm me-2">
+                  <i class="bi bi-telephone-fill"></i> Call
+                </button>
+
+                <button class="btn btn-light btn-sm">
+                  <i class="bi bi-chat-dots-fill"></i> Message
+                </button>
+              </div>
             </div>
+          </div>
         </div>
         <div class="col-md-8">
-            <div class="rounded-4">
-                Track you team
-            </div>
+          <div class="rounded-4">Track you team</div>
         </div>
       </div>
-
     </div>
 
     <!-- you can add single or multiple scripts tag-->
