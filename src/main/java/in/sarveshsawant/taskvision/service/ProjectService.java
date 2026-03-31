@@ -36,4 +36,8 @@ public class ProjectService {
     public Project getProjectById(Long id) {
         return projectRepository.getReferenceById(id);
     }
+
+    public void deleteProject(Long id) {
+        projectRepository.deleteById(id);
+    }
 }

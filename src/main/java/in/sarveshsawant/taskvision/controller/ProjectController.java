@@ -3,6 +3,7 @@ package in.sarveshsawant.taskvision.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,9 +30,9 @@ public class ProjectController {
             @RequestParam(defaultValue = "") String pageSortBy,
             @RequestParam(defaultValue = "true") boolean pageSortAsc,
             Model model) {
-        Page<Project> projects = projectService.getProjectPageList(searchTerm, pageNumber, pageSize, pageSortBy,
+        Page<Project> projectPage = projectService.getProjectPageList(searchTerm, pageNumber, pageSize, pageSortBy,
                 pageSortAsc);
-        model.addAttribute("projects", projects);
+        model.addAttribute("projectPage", projectPage);
         return "projects/project";
     }
 
@@ -49,11 +50,27 @@ public class ProjectController {
     }
 
     @GetMapping(path = { "/view-{id}", "/view-{id}/" })
-    public String getProjectHome(
+    public String viewProject(
             @PathVariable Long id,
             Model model) {
         Project project = projectService.getProjectById(id);
         model.addAttribute("project", project);
         return "projects/viewProject";
+    }
+
+    @GetMapping(path = { "/delete-{id}", "/delete-{id}/" })
+    public String deleteProjectPage(
+            @PathVariable Long id,
+            Model model) {
+        Project project = projectService.getProjectById(id);
+        model.addAttribute("project", project);
+        return "projects/deleteProject";
+    }
+
+    @DeleteMapping(path = { "/delete-confirm-{id}", "/delete-confirm-{id}/" })
+    public String deleteProject(@PathVariable Long id,
+            Model model) {
+        projectService.deleteProject(id);
+        return "redirect:/project";
     }
 }

@@ -35,8 +35,8 @@
       </div>
 
       <script th:inline="javascript">
-        let projects = /*[[${projects}]]*/ {};
-        console.log(JSON.stringify(projects, null, 2));
+        let projectPage = /*[[${projectPage}]]*/ {};
+        console.log(JSON.stringify(projectPage, null, 2));
       </script>
 
       <div class="card">
@@ -47,12 +47,12 @@
               <ol class="table-pager">
                 <li class="table-pager-item">
                   <a
-                    th:text="${projects.number * projects.size + 1} + ' - ' + 
-            ${projects.number * projects.size + projects.numberOfElements}"
+                    th:text="${projectPage.number * projectPage.size + 1} + ' - ' + 
+            ${projectPage.number * projectPage.size + projectPage.numberOfElements}"
                   ></a>
                 </li>
                 <li class="table-pager-item">
-                  <a th:text="${projects.totalElements}"></a>
+                  <a th:text="${projectPage.totalElements}"></a>
                 </li>
               </ol>
               <nav class="btn-group">
@@ -60,8 +60,8 @@
                   type="button"
                   class="btn btn-sm btn-outline-secondary"
                   id="btnPagerPre"
-                  th:if="${!projects.first}"
-                  th:href="@{/project(pageNumber=${projects.number - 1}, pageSize=${projects.size})}"
+                  th:if="${!projectPage.first}"
+                  th:href="@{/project(pageNumber=${projectPage.number - 1}, pageSize=${projectPage.size})}"
                 >
                   &lt;
                 </a>
@@ -69,8 +69,8 @@
                   type="button"
                   class="btn btn-sm btn-outline-secondary"
                   id="btnPagerPost"
-                  th:if="${!projects.last}"
-                  th:href="@{/project(pageNumber=${projects.number + 1}, pageSize=${projects.size})}"
+                  th:if="${!projectPage.last}"
+                  th:href="@{/project(pageNumber=${projectPage.number + 1}, pageSize=${projectPage.size})}"
                 >
                   &gt;
                 </a>
@@ -163,9 +163,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr th:each="project,stat : ${projects.content}">
+                  <tr th:each="project,stat : ${projectPage.content}">
                     <td
-                      th:text="${projects.number * projects.size + stat.index + 1 }"
+                      th:text="${projectPage.number * projectPage.size + stat.index + 1 }"
                     ></td>
                     <td th:text="${project.name}"></td>
                     <td th:text="${project.description}"></td>
@@ -231,7 +231,7 @@
                     <a
                       class="page-link"
                       id="linkTableNavFirst"
-                      th:href="@{/project(pageNumber=0, pageSize=${projects.size})}"
+                      th:href="@{/project(pageNumber=0, pageSize=${projectPage.size})}"
                       >First</a
                     >
                   </li>
@@ -239,8 +239,8 @@
                     <a
                       class="page-link"
                       id="linkTableNavPre"
-                      th:if="${projects.hasPrevious()}"
-                      th:href="@{/project(pageNumber=${projects.number - 1}, pageSize=${projects.size})}"
+                      th:if="${projectPage.hasPrevious()}"
+                      th:href="@{/project(pageNumber=${projectPage.number - 1}, pageSize=${projectPage.size})}"
                       >Previous</a
                     >
                   </li>
@@ -255,8 +255,8 @@
                           type="number"
                           name="pageNumber"
                           size="4"
-                          th:max="${projects.totalPages}"
-                          th:value="${projects.number + 1}"
+                          th:max="${projectPage.totalPages}"
+                          th:value="${projectPage.number + 1}"
                           class="form-control"
                           style="
                             border: 0;
@@ -269,7 +269,7 @@
                         <input
                           type="hidden"
                           name="pageSize"
-                          th:value="${projects.size}"
+                          th:value="${projectPage.size}"
                         />
                       </a>
                     </li>
@@ -288,8 +288,8 @@
                     <a
                       class="page-link"
                       id="linkTableNavPost"
-                      th:if="${projects.hasNext()}"
-                      th:href="@{/project(pageNumber=${projects.number + 1}, pageSize=${projects.size})}"
+                      th:if="${projectPage.hasNext()}"
+                      th:href="@{/project(pageNumber=${projectPage.number + 1}, pageSize=${projectPage.size})}"
                       >Next</a
                     >
                   </li>
@@ -297,7 +297,7 @@
                     <a
                       class="page-link"
                       id="linkTableNavLast"
-                      th:href="@{/project(pageNumber=${projects.totalPages-1}, pageSize=${projects.size})}"
+                      th:href="@{/project(pageNumber=${projectPage.totalPages-1}, pageSize=${projectPage.size})}"
                       >Last</a
                     >
                   </li>

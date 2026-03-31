@@ -1,0 +1,138 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{layout/layout ::parent(~{::title},~{::#content},~{::link},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- you can add single or multiple link tag -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <title>Task</title>
+  </head>
+  <body>
+    <!-- Page content inside this -->
+    <div id="content">
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Tasks</a></li>
+            <li class="breadcrumb-item active" aria-current="page">New</li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <form
+            data-th-action="@{/task/save}"
+            data-th-object="${task}"
+            method="post"
+          >
+            <div class="mb-3">
+              <label for="txtTitle" class="form-label">Task title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="txtTitle"
+                data-th-field="*{title}"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Select Type</label>
+              <select class="form-select" th:field="*{type.id}" required>
+                <option value="" disabled selected>Select a type</option>
+                <option
+                  th:each="typ : ${taskTypes}"
+                  th:value="${typ.id}"
+                  th:text="${typ.type}"
+                ></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="txtDesc" class="form-label">Description</label>
+              <textarea
+                type="text"
+                class="form-control"
+                id="txtDesc"
+                data-th-field="*{description}"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="dateSart" class="form-label">Start Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="dateStart"
+                data-th-field="*{startDate}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="dateEnd" class="form-label">End Date</label>
+              <input
+                type="date"
+                class="form-control"
+                id="dateEnd"
+                data-th-field="*{endDate}"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Select Project</label>
+              <select class="form-select" th:field="*{project.id}" required>
+                <option value="" disabled selected>Select a project</option>
+                <option
+                  th:each="proj : ${projects}"
+                  th:value="${proj.id}"
+                  th:text="${proj.name}"
+                ></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Assign To</label>
+              <select
+                class="form-select"
+                th:field="*{assignedUser.id}"
+                required
+              >
+                <option value="" disabled selected>Select Assign User</option>
+                <option
+                  th:each="u : ${users}"
+                  th:value="${u.id}"
+                  th:text="${u.username}"
+                ></option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Reporting To</label>
+              <select
+                class="form-select"
+                th:field="*{reportingUser.id}"
+                required
+              >
+                <option value="" disabled selected>
+                  Select Reporting User
+                </option>
+                <option
+                  th:each="u : ${users}"
+                  th:value="${u.id}"
+                  th:text="${u.username}"
+                ></option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- you can add single or multiple scripts tag-->
+    <script>
+      console.log("home page");
+    </script>
+  </body>
+</html>

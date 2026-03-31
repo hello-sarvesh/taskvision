@@ -22,6 +22,305 @@
         </nav>
       </div>
 
+      <div>
+        <a
+          data-th-href="@{/task/new}"
+          class="btn btn-outline-success rounded-pill"
+          >+ Add task</a
+        >
+      </div>
+
+      <script th:inline="javascript">
+        let taskPage = /*[[${taskPage}]]*/ {};
+        console.log(JSON.stringify(taskPage, null, 2));
+      </script>
+
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <h6>Task List</h6>
+            <nav aria-label="table-pager" class="table-pager-container">
+              <ol class="table-pager">
+                <li class="table-pager-item">
+                  <a
+                    th:text="${taskPage.number * taskPage.size + 1} + ' - ' + 
+            ${taskPage.number * taskPage.size + taskPage.numberOfElements}"
+                  ></a>
+                </li>
+                <li class="table-pager-item">
+                  <a th:text="${taskPage.totalElements}"></a>
+                </li>
+              </ol>
+              <nav class="btn-group">
+                <a
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  id="btnPagerPre"
+                  th:if="${!taskPage.first}"
+                  th:href="@{/task(pageNumber=${taskPage.number - 1}, pageSize=${taskPage.size})}"
+                >
+                  &lt;
+                </a>
+                <a
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  id="btnPagerPost"
+                  th:if="${!taskPage.last}"
+                  th:href="@{/task(pageNumber=${taskPage.number + 1}, pageSize=${taskPage.size})}"
+                >
+                  &gt;
+                </a>
+              </nav>
+            </nav>
+          </div>
+
+          <div class="mb-3 d-flex justify-content-between" style="gap: 10px">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="search"
+              id="txtTableSearch"
+            />
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              id="btnTableSearch"
+            >
+              Search
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              id="btnTableSearchClear"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div class="container">
+            <div class="table-responsive">
+              <table
+                class="table table-bordered border-primary scroll-table scroll-table-hw-1000"
+                id="tabletask"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 5%"
+                      data-th-key="id"
+                    >
+                      Sr. No.<i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 20%"
+                      data-th-key="name"
+                    >
+                      Task <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 10%"
+                      data-th-key="description"
+                    >
+                      Details <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 15%"
+                      data-th-key="type"
+                    >
+                      Type <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 15%"
+                      data-th-key="project"
+                    >
+                      Project <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 15%"
+                      data-th-key="startDate"
+                    >
+                      Start Date <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 15%"
+                      data-th-key="endDate"
+                    >
+                      End Date <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 15%"
+                      data-th-key="user"
+                    >
+                      User <i class="fas fa-sort"></i>
+                    </th>
+                    <th
+                      scope="col"
+                      class="text-center"
+                      style="width: 10%"
+                      data-th-key="status"
+                    >
+                      Status <i class="fas fa-sort"></i>
+                    </th>
+                    <th scope="col" class="text-center" style="width: 15%">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="task,stat : ${taskPage.content}">
+                    <td
+                      th:text="${taskPage.number * taskPage.size + stat.index + 1 }"
+                    ></td>
+                    <td th:text="${task.title}"></td>
+                    <td th:text="${task.description}"></td>
+                    <td th:text="${task.type}"></td>
+                    <td th:text="${task.project != null ? task.project.name : 'N/A'}"></td>
+                    <td>
+                      Assigned to <span th:text="${task.assignedUser != null ? task.assignedUser : 'N/A'}"></span>
+                      <br>
+                      Reporting to <span th:text="${task.reportingUser != null ? task.reportingUser : 'N/A'}"></span>
+                    </td>
+                    <td th:text="${task.startDate}"></td>
+                    <td th:text="${task.endDate}"></td>
+                    <td th:text="${task.status != null ? task.status.status: 'N/A'}"></td>
+                    <td>
+                      <div class="d-flex justify-content-between">
+                        <a
+                          class="btn btn-outline-secondary"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          data-bs-title="View Record"
+                          aria-label="View Record"
+                          th:href="@{'/task/view-' + ${task.id}}"
+                        >
+                          <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a
+                          class="btn btn-outline-primary"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          data-bs-title="Update"
+                          aria-label="Update"
+                          th:href="@{'/task/update-' + ${task.id}}"
+                        >
+                          <i class="fa-solid fa-edit"></i>
+                        </a>
+                        <a
+                          class="btn btn-outline-danger"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          data-bs-title="Delete"
+                          aria-label="Delete"
+                          th:href="@{'/task/delete-' + ${task.id}}"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <nav aria-label="Page Navigation">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavFirst"
+                      th:href="@{/task(pageNumber=0, pageSize=${taskPage.size})}"
+                      >First</a
+                    >
+                  </li>
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavPre"
+                      th:if="${taskPage.hasPrevious()}"
+                      th:href="@{/task(pageNumber=${taskPage.number - 1}, pageSize=${taskPage.size})}"
+                      >Previous</a
+                    >
+                  </li>
+                  <form
+                    th:action="@{/task}"
+                    method="get"
+                    class="d-inline-flex"
+                  >
+                    <li class="page-item">
+                      <a class="page-link">
+                        <input
+                          type="number"
+                          name="pageNumber"
+                          size="4"
+                          th:max="${taskPage.totalPages}"
+                          th:value="${taskPage.number + 1}"
+                          class="form-control"
+                          style="
+                            border: 0;
+                            padding: 0px;
+                            text-align: center;
+                            background: none;
+                          "
+                          id="numTableNavPage"
+                        />
+                        <input
+                          type="hidden"
+                          name="pageSize"
+                          th:value="${taskPage.size}"
+                        />
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <button
+                        type="submit"
+                        class="page-link"
+                        id="linkTableNavGo"
+                      >
+                        Go
+                      </button>
+                    </li>
+                  </form>
+
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavPost"
+                      th:if="${taskPage.hasNext()}"
+                      th:href="@{/task(pageNumber=${taskPage.number + 1}, pageSize=${taskPage.size})}"
+                      >Next</a
+                    >
+                  </li>
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      id="linkTableNavLast"
+                      th:href="@{/task(pageNumber=${taskPage.totalPages-1}, pageSize=${taskPage.size})}"
+                      >Last</a
+                    >
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
       
 
     </div>
