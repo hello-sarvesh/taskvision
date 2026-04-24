@@ -29,12 +29,12 @@
           >+ Add task</a
         >
       </div>
-
+<!--
       <script th:inline="javascript">
-        let taskPage = /*[[${taskPage}]]*/ {};
-        console.log(JSON.stringify(taskPage, null, 2));
+        let taskPageJs = /*[[${taskPage}]]*/ {};
+        console.log(JSON.stringify(taskPageJs, null, 2));
       </script>
-
+-->
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
@@ -189,12 +189,12 @@
                     ></td>
                     <td th:text="${task.title}"></td>
                     <td th:text="${task.description}"></td>
-                    <td th:text="${task.type}"></td>
+                    <td th:text="${task.type.type}"></td>
                     <td th:text="${task.project != null ? task.project.name : 'N/A'}"></td>
                     <td>
-                      Assigned to <span th:text="${task.assignedUser != null ? task.assignedUser : 'N/A'}"></span>
+                      Assigned to <span th:text="${task.assignedUser != null ? task.assignedUser.username : 'N/A'}"></span>
                       <br>
-                      Reporting to <span th:text="${task.reportingUser != null ? task.reportingUser : 'N/A'}"></span>
+                      Reporting to <span th:text="${task.reportingUser != null ? task.reportingUser.username : 'N/A'}"></span>
                     </td>
                     <td th:text="${task.startDate}"></td>
                     <td th:text="${task.endDate}"></td>

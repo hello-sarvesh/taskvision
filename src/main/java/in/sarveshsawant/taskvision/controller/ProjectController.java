@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -71,6 +72,20 @@ public class ProjectController {
     public String deleteProject(@PathVariable Long id,
             Model model) {
         projectService.deleteProject(id);
+        return "redirect:/project";
+    }
+
+    @GetMapping(path = { "/update-{id}", "/update-{id}/" })
+    public String updateProject(@PathVariable Long id, Model model) {
+        Project project = projectService.getProjectById(id);
+        model.addAttribute("project", project);
+        return "projects/updateProject";
+    }
+
+    @PutMapping(path = { "/update", "/update/" })
+    public String updateSaveProject(@ModelAttribute Project updatedProject, Model model) {
+        System.out.println("project " + updatedProject.toString());
+        projectService.saveProject(updatedProject);
         return "redirect:/project";
     }
 }

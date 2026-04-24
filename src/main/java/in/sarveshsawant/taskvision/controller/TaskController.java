@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -56,5 +58,12 @@ public class TaskController {
         model.addAttribute("projects", projects);
         model.addAttribute("users", users);
         return "tasks/addTask";
+    }
+
+    @PostMapping(path = { "/save", "/save/" })
+    public String saveTask(@ModelAttribute Task newTask, Model model) {
+        System.out.println("task " + newTask.toString());
+        taskService.saveTask(newTask);
+        return "redirect:/task";
     }
 }

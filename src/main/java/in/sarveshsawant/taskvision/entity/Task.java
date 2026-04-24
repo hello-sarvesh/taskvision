@@ -73,10 +73,16 @@ public class Task {
     private List<TaskTimeLog> timeLogs;
 
     @Column(name = "created_at_utc")
-    private LocalDateTime createAtUTC;
+    private LocalDateTime createdAtUTC;
 
     @Column(name = "updated_at_utc")
     private LocalDateTime updatedAtUTC;
+
+    @Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+    private Boolean active;
+
+    @Column(columnDefinition = "TINYINT(1) DEFAULT 0")
+    private Boolean deleted;
 
     @Transient
     public Double getCompletedHours() {
@@ -89,7 +95,10 @@ public class Task {
 
     @Transient
     public Double getRemainingHours() {
-        return expectedHours - getCompletedHours();
+        if(expectedHours != null)
+            return expectedHours - getCompletedHours();
+        else
+            return getCompletedHours();
     }
 
 }
