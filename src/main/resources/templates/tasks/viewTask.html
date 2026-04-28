@@ -1,0 +1,110 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{layout/layout ::parent(~{::title},~{::#content},~{::link},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- you can add single or multiple link tag -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <title>Task</title>
+  </head>
+  <body>
+    <!-- Page content inside this -->
+    <div id="content">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">Task title</div>
+            <div class="col-6 bg-info-subtle" th:text="${task.title}"></div>
+          </div>
+          <div class="row">
+            <div class="col-6">Description</div>
+            <div
+              class="col-6 bg-info-subtle"
+              th:text="${task.description}"
+            ></div>
+          </div>
+          <div class="row">
+            <div class="col-6">Start Date</div>
+            <div
+              class="col-6 bg-info-subtle"
+              th:text="${task.startDate}"
+            ></div>
+          </div>
+          <div class="row">
+            <div class="col-6">End Date</div>
+            <div
+              class="col-6 bg-info-subtle"
+              th:text="${task.endDate}"
+            ></div>
+          </div>
+          <div class="row">
+            <div class="col-6">Active</div>
+            <div class="col-6 bg-info-subtle">
+              <span th:if="${task.active}">
+                Active
+                <i
+                  class="fa-regular fa-circle-check"
+                  style="color: #63e6be"
+                ></i>
+              </span>
+              <span th:unless="${task.active}">
+                Deactive
+                <i
+                  class="fa-regular fa-circle-xmark"
+                  style="color: #e66565"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">Created At</div>
+            <div
+              class="col-6 bg-info-subtle"
+              th:text="${#temporals.format(task.createdAtUTC, 'yyyy-MM-dd HH:mm:ss')}"
+            ></div>
+          </div>
+          <div class="row">
+            <div class="col-6">Updated At</div>
+            <div
+              class="col-6 bg-info-subtle"
+              th:text="${#temporals.format(task.updatedAtUTC, 'yyyy-MM-dd HH:mm:ss')}"
+            ></div>
+          </div>
+          <div class="row">
+            <div class="col-6">Project Name</div>
+            <div
+              class="col-6 bg-info-subtle"
+              th:text="${task.project.name}"
+            ></div>
+          </div>
+          <div class="row">
+            <div class="col-6">Assigned</div>
+            <div class="col-6 bg-info-subtle" th:text="${task.assignedUser.username}"></div>
+          </div>
+          <div class="row">
+            <div class="col-6">Reporting</div>
+            <div class="col-6 bg-info-subtle" th:text="${task.reportingUser.username}"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-body">
+          <a th:href="@{/task}" class="btn btn-secondary">Back</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- you can add single or multiple scripts tag-->
+    <script>
+      console.log("home page");
+    </script>
+  </body>
+</html>
