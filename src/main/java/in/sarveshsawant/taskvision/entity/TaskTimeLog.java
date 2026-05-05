@@ -35,6 +35,10 @@ public class TaskTimeLog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    
+    @ManyToOne
+    @JoinColumn(name = "task_status_id")
+    private TaskStatus status;
 
     private Double hours;
 

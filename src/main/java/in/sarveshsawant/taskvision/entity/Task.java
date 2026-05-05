@@ -66,10 +66,6 @@ public class Task {
     @JoinColumn(name = "task_type_id")
     private TaskType type;
 
-    @ManyToOne
-    @JoinColumn(name = "task_status_id")
-    private TaskStatus status;
-
     @Column(name = "expected_hours")
     private Double expectedHours;
 

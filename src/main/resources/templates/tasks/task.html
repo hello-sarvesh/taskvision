@@ -28,6 +28,11 @@
           class="btn btn-outline-success rounded-pill"
           >+ Add task</a
         >
+         <a
+          data-th-href="@{/task-status/}"
+          class="btn btn-outline-success rounded-pill"
+          >Task Status</a
+        >
       </div>
 <!--
       <script th:inline="javascript">
@@ -169,14 +174,6 @@
                     >
                       User <i class="fas fa-sort"></i>
                     </th>
-                    <th
-                      scope="col"
-                      class="text-center"
-                      style="width: 10%"
-                      data-th-key="status"
-                    >
-                      Status <i class="fas fa-sort"></i>
-                    </th>
                     <th scope="col" class="text-center" style="width: 15%">
                       Action
                     </th>
@@ -198,7 +195,6 @@
                     </td>
                     <td th:text="${task.startDate}"></td>
                     <td th:text="${task.endDate}"></td>
-                    <td th:text="${task.status != null ? task.status.status: 'N/A'}"></td>
                     <td>
                       <div class="d-flex justify-content-between">
                         <a

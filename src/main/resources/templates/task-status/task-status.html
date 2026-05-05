@@ -1,0 +1,110 @@
+<!doctype html>
+<html
+  lang="en"
+  th:replace="~{layout/layout ::parent(~{::title},~{::#content},~{::link},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- you can add single or multiple link tag -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}" />
+    <title>Task Status</title>
+  </head>
+  <body>
+    <!-- Page content inside this -->
+    <div id="content">
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Tasks</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Task Status
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <!--
+      <script th:inline="javascript">
+        let taskPageJs = /*[[${taskPage}]]*/ {};
+        console.log(JSON.stringify(taskPageJs, null, 2));
+      </script>
+-->
+      <form th:action="@{/task-status/save}" th:object="${form}" method="post">
+        <div id="statusList">
+          <div th:each="s, stat : *{statuses}" class="status-item">
+            <input type="hidden" th:field="*{statuses[__${stat.index}__].id}" />
+
+            <input
+              type="text"
+              th:field="*{statuses[__${stat.index}__].status}"
+            />
+
+            <input
+              type="hidden"
+              class="order-input"
+              th:field="*{statuses[__${stat.index}__].orderIndex}"
+            />
+          </div>
+        </div>
+
+        <button type="button" onclick="addStatus()">Add</button>
+        <button type="submit">Save</button>
+      </form>
+    </div>
+
+    <!-- you can add single or multiple scripts tag-->
+    <script>
+      console.log("home page");
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script>
+      const list = document.getElementById("statusList");
+
+      new Sortable(list, {
+        animation: 150,
+      });
+
+      function reindexInputs() {
+        document.querySelectorAll(".status-item").forEach((el, index) => {
+          el.querySelectorAll("input").forEach((input) => {
+            if (input.name) {
+              input.name = input.name.replace(
+                /statuses\[\d+\]/,
+                `statuses[${index}]`,
+              );
+            }
+          });
+        });
+      }
+
+      // Update order before submit
+      document.querySelector("form").addEventListener("submit", function () {
+        document.querySelectorAll(".status-item").forEach((el, index) => {
+          const orderInput = el.querySelector(".order-input");
+          if (orderInput) {
+            orderInput.value = index;
+          }
+        });
+
+        reindexInputs(); // ⭐ THIS is what you're missing
+      });
+
+      function addStatus() {
+        const list = document.getElementById("statusList");
+        const index = list.children.length;
+
+        const div = document.createElement("div");
+        div.className = "status-item";
+
+        div.innerHTML = `
+        <input type="hidden" name="statuses[${index}].id" />
+        <input type="text" name="statuses[${index}].status" placeholder="New status"/>
+        <input type="hidden" class="order-input" name="statuses[${index}].orderIndex" value="${index}" />
+    `;
+
+        list.appendChild(div);
+      }
+    </script>
+  </body>
+</html>
